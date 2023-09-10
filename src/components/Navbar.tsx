@@ -38,7 +38,7 @@ const Navbar = () => {
               <Menu />
             </button>
             <div
-              className={`absolute lg:hidden top-10 w-screen ${
+              className={`absolute z-50 lg:hidden top-10 w-screen ${
                 isMenuOpen ? "translate-x-0" : "-translate-x-full"
               } bg-gray-50 dark:bg-gray-900 h-[90vh] py-5 px-3 flex flex-col gap-5 duration-100 ease-in`}
             >
