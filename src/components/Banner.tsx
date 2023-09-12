@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from ".";
+import useAuthModalStore from "@/store/auth-modal-store";
 
 const Banner = () => {
+  const { setIsOpen } = useAuthModalStore();
+
   return (
     <div className='w-full h-96 md:h-80 flex flex-col-reverse gap-6 md:gap-0 md:flex-row items-center justify-between gradient-bg p-5 rounded-xl'>
       <div className='pl-5'>
@@ -11,6 +16,7 @@ const Banner = () => {
         </div>
         <Button
           text='Sign In'
+          onClick={() => setIsOpen(true)}
           className='bg-blue-600 px-5 mt-3 rounded-full hover:bg-blue-500 text-white w-full md:w-fit'
         />
       </div>

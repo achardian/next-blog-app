@@ -1,8 +1,9 @@
-import { Navbar } from "@/components";
+import { AuthModal, Navbar } from "@/components";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import AuthProvider from "@/providers/AuthProvider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -19,15 +20,18 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${font.className} bg-white dark:bg-[#2f2b3a]`}>
-        <ThemeProvider
-          attribute='class'
-          storageKey='burogu-theme'
-          defaultTheme='dark'
-          enableSystem
-        >
-          <Navbar />
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute='class'
+            storageKey='burogu-theme'
+            defaultTheme='dark'
+            enableSystem
+          >
+            <Navbar />
+            {children}
+            <AuthModal />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
