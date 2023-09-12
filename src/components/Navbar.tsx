@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Search, PencilLine, UserCircle2, Menu } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
+import { Search, PencilLine, UserCircle2, Menu, LogOut } from "lucide-react";
 
 import { Logo, ThemeToggle } from ".";
 import { useState } from "react";
+import Image from "next/image";
+import useAuthModalStore from "@/store/auth-modal-store";
 
 const Navbar = () => {
   const links = [
@@ -22,7 +25,18 @@ const Navbar = () => {
     },
   ];
 
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false);
+  const { setIsOpen } = useAuthModalStore();
+
+  const handleDropdownClick = () => {
+    if (session?.user) {
+      setDropdownMenuOpen((prev) => !prev);
+    } else {
+      setIsOpen(true);
+    }
+  };
 
   return (
     <div className='border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#1a1625]'>
@@ -67,8 +81,49 @@ const Navbar = () => {
           {/* theme-toggle */}
           <ThemeToggle />
           {/* avatar */}
-          <button className='pr-2'>
-            <UserCircle2 height={25} width={25} />
+          <button onClick={handleDropdownClick} className='pr-2 relative'>
+            {session?.user ? (
+              <Image
+                src={session.user.image as string}
+                alt='user-img'
+                width={25}
+                height={25}
+                className='rounded-full'
+              />
+            ) : (
+              <UserCircle2 height={25} width={25} />
+            )}
+            {dropdownMenuOpen && (
+              <div className='absolute top-10 w-[220px] bg-gray-50 shadow-md dark:bg-gray-900 right-0 p-2 rounded-md'>
+                <div className='flex items-center gap-3'>
+                  <Image
+                    src={session?.user?.image as string}
+                    alt='user-img'
+                    width={40}
+                    height={40}
+                    className='rounded-full'
+                  />
+                  <div>
+                    <h3 className='text-ellipsis'>
+                      {(session?.user?.name as string).length >= 9
+                        ? `${session?.user?.name?.slice(0, 12)}...`
+                        : session?.user?.name}
+                    </h3>
+                  </div>
+                </div>
+                <Link href='/settings' className='profile-menu-btn'>
+                  <UserCircle2 />
+                  Account settings
+                </Link>
+                <button
+                  onClick={() => signOut()}
+                  className='profile-menu-btn w-full text-red-600'
+                >
+                  <LogOut />
+                  Sign Out
+                </button>
+              </div>
+            )}
           </button>
         </div>
       </nav>
