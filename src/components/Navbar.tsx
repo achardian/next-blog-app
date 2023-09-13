@@ -2,7 +2,15 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { Search, PencilLine, UserCircle2, Menu, LogOut } from "lucide-react";
+import {
+  Search,
+  PencilLine,
+  UserCircle2,
+  Menu,
+  LogOut,
+  Bookmark,
+  Star,
+} from "lucide-react";
 
 import { Logo, ThemeToggle } from ".";
 import { useState } from "react";
@@ -57,7 +65,12 @@ const Navbar = () => {
               } bg-gray-50 dark:bg-gray-900 h-[90vh] py-5 px-3 flex flex-col gap-5 duration-100 ease-in`}
             >
               {links.map((link) => (
-                <Link className='text-lg' key={link.name} href={link.path}>
+                <Link
+                  className='text-lg'
+                  onClick={() => setIsMenuOpen(false)}
+                  key={link.name}
+                  href={link.path}
+                >
                   {link.name}
                 </Link>
               ))}
@@ -94,7 +107,7 @@ const Navbar = () => {
               <UserCircle2 height={25} width={25} />
             )}
             {dropdownMenuOpen && (
-              <div className='absolute top-10 w-[220px] bg-gray-50 shadow-md dark:bg-gray-900 right-0 p-2 rounded-md'>
+              <div className='absolute z-[100] top-10 w-[220px] bg-gray-50 shadow-md dark:bg-gray-900 right-0 p-2 rounded-md'>
                 <div className='flex items-center gap-3'>
                   <Image
                     src={session?.user?.image as string}
@@ -104,16 +117,33 @@ const Navbar = () => {
                     className='rounded-full'
                   />
                   <div>
-                    <h3 className='text-ellipsis'>
+                    <Link
+                      href={`/profile/${session?.user.id}`}
+                      className='text-ellipsis'
+                    >
                       {(session?.user?.name as string).length >= 9
                         ? `${session?.user?.name?.slice(0, 12)}...`
                         : session?.user?.name}
-                    </h3>
+                    </Link>
                   </div>
                 </div>
                 <Link href='/settings' className='profile-menu-btn'>
                   <UserCircle2 />
                   Account settings
+                </Link>
+                <Link
+                  href='/bookmarks'
+                  className='profile-menu-btn hidden lg:flex'
+                >
+                  <Bookmark />
+                  Bookmarks
+                </Link>
+                <Link
+                  href='/favorites'
+                  className='profile-menu-btn hidden lg:flex'
+                >
+                  <Star />
+                  Favorites
                 </Link>
                 <button
                   onClick={() => signOut()}
