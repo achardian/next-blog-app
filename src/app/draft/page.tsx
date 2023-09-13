@@ -1,18 +1,27 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Upload, X } from "lucide-react";
 import "react-quill/dist/quill.bubble.css";
 import ReactQuill from "react-quill";
 import Image from "next/image";
+import { Button } from "@/components";
+import { useSession } from "next-auth/react";
+import convertToSlug from "@/lib/slug-converter";
+import toast from "react-hot-toast";
 
 const Draft = () => {
+  const { data: session } = useSession();
   const [value, setValue] = useState("");
   const inputFileRef = useRef<HTMLInputElement | null>(null);
   const [linkOpen, setLinkOpen] = useState(true);
   const [fileOpen, setFileOpen] = useState(false);
   const [file, setFile] = useState<FileList | null>(null);
   const [imgPreviewUrl, setImgPreviewUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+  const router = useRouter();
 
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -52,6 +61,32 @@ const Draft = () => {
 
   const handleForm = async (e: FormEvent) => {
     e.preventDefault();
+
+    const slug = convertToSlug(title);
+
+    try {
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          imgUrl,
+          content: value,
+          userId: session?.user.id,
+          readCounter: 0,
+          slug,
+        }),
+      });
+
+      const data = await res.json();
+
+      toast.success(data, {
+        duration: 3000,
+      });
+
+      router.refresh();
+    } catch (error) {
+      toast.error(error as string, { duration: 3000 });
+    }
   };
 
   return (
@@ -85,6 +120,8 @@ const Draft = () => {
         type='url'
         hidden={!linkOpen}
         placeholder='http://example-image.com'
+        value={imgUrl}
+        onChange={(e) => setImgUrl(e.target.value)}
         className='mb-4 py-2 text-base bg-gray-100 dark:bg-gray-900 rounded-sm px-3 font-semibold bg-transparent border-none outline-none'
       />
       <div
@@ -133,6 +170,8 @@ const Draft = () => {
       <input
         type='text'
         placeholder='Title'
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         className='py-1 text-2xl font-semibold bg-transparent border-none outline-none'
       />
       <ReactQuill
@@ -142,6 +181,10 @@ const Draft = () => {
         onChange={setValue}
         className='dark:placeholder:text-white'
         modules={{ toolbar: toolbarOptions }}
+      />
+      <Button
+        text='publish'
+        className='ml-auto bg-blue-600 text-white px-5 rounded-full hover:bg-blue-500'
       />
     </form>
   );

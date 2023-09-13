@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import AuthProvider from "@/providers/AuthProvider";
+import ToasterProvider from "@/providers/ToasterProvider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <AuthModal />
+            <ToasterProvider />
           </ThemeProvider>
         </AuthProvider>
       </body>

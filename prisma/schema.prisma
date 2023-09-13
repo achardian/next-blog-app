@@ -61,6 +61,7 @@ model Post {
   imageUrl String
   userId    String @db.ObjectId
   content   String @db.String
+  slug      String @db.String
   readCounter   Int?
   likes     String[]  @db.ObjectId
   author User @relation(fields: [userId], references: [id], onDelete: Cascade)
