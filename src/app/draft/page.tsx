@@ -90,7 +90,10 @@ const Draft = () => {
   };
 
   return (
-    <form onSubmit={handleForm} className='wrapper my-5 px-3 flex flex-col'>
+    <form
+      onSubmit={handleForm}
+      className='wrapper my-5 px-3 flex flex-col overflow-hidden'
+    >
       <label htmlFor='image'>Image Cover</label>
       <div className='flex gap-3 my-3'>
         <button

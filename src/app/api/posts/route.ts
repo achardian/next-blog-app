@@ -24,3 +24,21 @@ export const POST = async (req: Request) => {
     });
   }
 };
+
+export const GET = async () => {
+  try {
+    const posts = await prismadb.post.findMany({
+      include: {
+        author: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json({ posts }, { status: 200 });
+  } catch (error) {
+    const err = error as Error;
+    return NextResponse.json(err.message, { status: 500 });
+  }
+};

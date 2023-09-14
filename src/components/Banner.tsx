@@ -1,14 +1,20 @@
 "use client";
 
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { Button } from ".";
 import useAuthModalStore from "@/store/auth-modal-store";
 
 const Banner = () => {
+  const { data: session } = useSession();
   const { setIsOpen } = useAuthModalStore();
 
   return (
-    <div className='w-full h-96 md:h-80 flex flex-col-reverse gap-6 md:gap-0 md:flex-row items-center justify-between gradient-bg p-5 rounded-xl'>
+    <div
+      className={`w-full h-96 md:h-80 ${
+        session?.user ? "hidden" : "flex"
+      } flex-col-reverse gap-6 md:gap-0 md:flex-row items-center justify-between gradient-bg p-5 rounded-xl`}
+    >
       <div className='pl-5'>
         <div className='text-3xl font-bold tracking-wide  gradient-text'>
           <h1>Share Your Ideas</h1>
