@@ -5,5 +5,15 @@ import Banner from "./Banner";
 import Button from "./Button";
 import AuthModal from "./AuthModal";
 import PostCard from "./PostCard";
+import SaveButton from "./SaveButton";
 
-export { Navbar, ThemeToggle, Logo, Banner, Button, AuthModal, PostCard };
+export {
+  Navbar,
+  ThemeToggle,
+  Logo,
+  Banner,
+  Button,
+  AuthModal,
+  PostCard,
+  SaveButton,
+};

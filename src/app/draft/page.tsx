@@ -22,6 +22,8 @@ const Draft = () => {
   const [imgPreviewUrl, setImgPreviewUrl] = useState("");
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [tag, setTag] = useState("");
+  const [tags, setTags] = useState<string[] | []>([]);
   const [description, setDescription] = useState("");
   const router = useRouter();
 
@@ -50,6 +52,7 @@ const Draft = () => {
           imgUrl,
           content: value,
           description,
+          tags,
           userId: session?.user.id,
           readCounter: 0,
           slug,
@@ -165,6 +168,41 @@ const Draft = () => {
         value={description}
       />
       <small className='font-semibold mb-3'>{description.length} / 200</small>
+      <div className='my-5 flex flex-col gap-3'>
+        <div className='flex items-center gap-3'>
+          {tags.map((tag) => (
+            <div
+              key={tag}
+              className='bg-gray-600 text-white px-3 py-1 rounded-sm w-fit flex items-center gap-2'
+            >
+              {tag}
+              <button
+                onClick={() =>
+                  setTags(tags.filter((tagName) => tagName !== tag))
+                }
+                className='bg-gray-200 rounded-full text-gray-700'
+              >
+                <X height={20} width={20} />
+              </button>
+            </div>
+          ))}
+        </div>
+        <div>
+          <input
+            type='text'
+            placeholder='input tag here'
+            onChange={(e) => setTag(e.target.value)}
+            className='py-1 px-2 text-basis bg-gray-200 dark:bg-gray-900 border-none outline-none'
+          />
+          <button
+            type='button'
+            onClick={() => setTags((prevTags) => [...prevTags, tag])}
+            className='bg-blue-600 text-white px-3 py-1'
+          >
+            Add tag
+          </button>
+        </div>
+      </div>
       <ReactQuill
         placeholder='Share your ideas...'
         theme='bubble'
