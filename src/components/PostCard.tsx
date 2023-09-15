@@ -1,4 +1,5 @@
 import { PostWithAuthor } from "@/types";
+import { Heart, MessageCircle } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,16 +28,13 @@ const PostCard = ({ post }: { post: PostWithAuthor }) => {
         </div>
       </div>
       <div className='flex flex-col lg:flex-row justify-between gap-3'>
-        <div>
-          <Link href={`/post/${post.slug}`} className='font-bold'>
+        <div className='flex-1 flex flex-col gap-3'>
+          <Link href={`/post/${post.slug}`} className='font-bold text-xl'>
             {post.title}
           </Link>
-          <div
-            className='hidden lg:block'
-            dangerouslySetInnerHTML={{ __html: post.content.substring(0, 150) }}
-          ></div>
+          <div className='hidden lg:block'>{post.description}</div>
         </div>
-        <div className='w-full h-[300px] lg:w-[30%] lg:h-[120px] relative'>
+        <div className='w-full h-[200px] lg:w-1/3 lg:h-[120px] relative'>
           <Image
             src={post.imageUrl}
             alt='image'
@@ -45,7 +43,14 @@ const PostCard = ({ post }: { post: PostWithAuthor }) => {
           />
         </div>
       </div>
-      <div></div>
+      <div className='flex items-center gap-3'>
+        <button>
+          <Heart width={20} height={20} />
+        </button>
+        <button>
+          <MessageCircle width={20} height={20} />
+        </button>
+      </div>
     </div>
   );
 };

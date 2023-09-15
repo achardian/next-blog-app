@@ -1,6 +1,5 @@
 import { Banner, PostCard } from "@/components";
 import { PostWithAuthor } from "@/types";
-import { Post } from "@prisma/client";
 import { headers } from "next/headers";
 
 const getPosts = async () => {

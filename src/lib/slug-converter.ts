@@ -1,8 +1,11 @@
+import ShortUniqueId from "short-unique-id";
+
 function convertToSlug(text: string) {
-  return text
+  const uid = new ShortUniqueId({ length: 10 });
+  return `${text
     .toLowerCase()
     .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
+    .replace(/[^\w-]+/g, "")}-${uid.rnd().toLowerCase()}`;
 }
 
 export default convertToSlug;

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 
 export const POST = async (req: Request) => {
-  const { title, imgUrl, content, userId, readCounter, slug } =
+  const { title, imgUrl, content, description, userId, readCounter, slug } =
     await req.json();
 
   try {
@@ -11,6 +11,7 @@ export const POST = async (req: Request) => {
         title,
         imageUrl: imgUrl,
         content,
+        description,
         userId,
         readCounter,
         slug,

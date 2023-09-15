@@ -10,6 +10,7 @@ import { Button } from "@/components";
 import { useSession } from "next-auth/react";
 import convertToSlug from "@/lib/slug-converter";
 import toast from "react-hot-toast";
+import toolbarOptions from "@/lib/toolbar-options";
 
 const Draft = () => {
   const { data: session } = useSession();
@@ -21,31 +22,8 @@ const Draft = () => {
   const [imgPreviewUrl, setImgPreviewUrl] = useState("");
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [description, setDescription] = useState("");
   const router = useRouter();
-
-  const toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // toggled buttons
-    ["blockquote", "code-block"],
-
-    [{ header: 1 }, { header: 2 }], // custom button values
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ script: "sub" }, { script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-    [{ direction: "rtl" }], // text direction
-
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [
-      { align: null },
-      { align: "center" },
-      { align: "right" },
-      { align: "justify" },
-    ],
-    [{ image: true }],
-    [{ link: true }],
-    ["clean"], // remove formatting button
-  ];
 
   const handleImageFile = (e: ChangeEvent<HTMLInputElement>) => {
     const fr = new FileReader();
@@ -71,6 +49,7 @@ const Draft = () => {
           title,
           imgUrl,
           content: value,
+          description,
           userId: session?.user.id,
           readCounter: 0,
           slug,
@@ -97,6 +76,7 @@ const Draft = () => {
       <label htmlFor='image'>Image Cover</label>
       <div className='flex gap-3 my-3'>
         <button
+          type='button'
           className={`${
             linkOpen ? "bg-blue-600 text-white" : "bg-gray-100 dark:bg-gray-900"
           } px-5 py-1 rounded-full`}
@@ -108,6 +88,7 @@ const Draft = () => {
           Link
         </button>
         <button
+          type='button'
           onClick={() => {
             setLinkOpen(false);
             setFileOpen(true);
@@ -177,6 +158,13 @@ const Draft = () => {
         onChange={(e) => setTitle(e.target.value)}
         className='py-1 text-2xl font-semibold bg-transparent border-none outline-none'
       />
+      <textarea
+        placeholder='Write short description about your post (max 200 characters)'
+        className='py-1 text-lg bg-transparent border-none outline-none mt-3 min-h-[120px]'
+        onChange={(e) => setDescription(e.target.value.slice(0, 200))}
+        value={description}
+      />
+      <small className='font-semibold mb-3'>{description.length} / 200</small>
       <ReactQuill
         placeholder='Share your ideas...'
         theme='bubble'
