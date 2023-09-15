@@ -25,6 +25,21 @@
   overflow: hidden;
 }
 
+.ql-syntax {
+  background: #222;
+  color: #eee;
+  padding: 10px;
+}
+
+.ql-editor a {
+  color: blue;
+}
+
+.ql-editor code {
+  fill: transparent;
+  background-color: transparent;
+}
+
 .quill > .ql-container > .ql-editor.ql-blank::before {
   font-size: 20px;
   color: #cecece;

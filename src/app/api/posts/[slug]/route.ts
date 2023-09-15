@@ -12,10 +12,14 @@ export const GET = async (
       },
       include: {
         author: true,
-        comments: true,
+        comments: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
-    return NextResponse.json({ post }, { status: 200 });
+    return NextResponse.json(post, { status: 200 });
   } catch (error) {
     return NextResponse.json("Something went wrong", { status: 500 });
   }
