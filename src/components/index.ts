@@ -6,6 +6,7 @@ import Button from "./Button";
 import AuthModal from "./AuthModal";
 import PostCard from "./PostCard";
 import SaveButton from "./SaveButton";
+import LikeButton from "./LikeButton";
 
 export {
   Navbar,
@@ -16,4 +17,5 @@ export {
   AuthModal,
   PostCard,
   SaveButton,
+  LikeButton,
 };

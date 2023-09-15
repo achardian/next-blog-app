@@ -11,7 +11,7 @@ const Banner = () => {
 
   return (
     <div
-      className={`w-full h-96 md:h-80 ${
+      className={`w-full h-96 mb-5 md:h-80 ${
         session?.user ? "hidden" : "flex"
       } flex-col-reverse gap-6 md:gap-0 md:flex-row items-center justify-between gradient-bg p-5 rounded-xl`}
     >

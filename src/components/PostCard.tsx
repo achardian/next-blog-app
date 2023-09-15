@@ -47,9 +47,10 @@ const PostCard = ({ post }: { post: PostWithAuthor }) => {
         </div>
       </div>
       <div className='flex items-center justify-between gap-3'>
-        <div className='flex items-center gap-3'>
-          <Link href={`/post/${post.slug}`}>
+        <div className='flex items-center gap-5'>
+          <Link href={`/post/${post.slug}`} className='flex items-center gap-2'>
             <Heart width={20} height={20} />
+            {post.likes.length > 0 && post.likes.length}
           </Link>
           <Link href={`/post/${post.slug}`}>
             <MessageCircle width={20} height={20} />

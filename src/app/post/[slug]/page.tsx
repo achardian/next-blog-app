@@ -1,3 +1,4 @@
+import { LikeButton, SaveButton } from "@/components";
 import { PostWithComment } from "@/types";
 import { BookOpen, Calendar, Heart, MessageCircle } from "lucide-react";
 import moment from "moment";
@@ -54,7 +55,7 @@ const PostDetail = async ({ params }: { params: { slug: string } }) => {
           {estimatedReading} min
         </p>
       </div>
-      <div className='w-3/4 mx-auto my-6 leading-normal'>
+      <div className='w-3/4 mx-auto my-14 leading-normal content'>
         <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
       </div>
       <div className='w-3/4 mx-auto my-6 flex items-center gap-3'>
@@ -69,11 +70,9 @@ const PostDetail = async ({ params }: { params: { slug: string } }) => {
         ))}
       </div>
       <div className='w-3/4 mx-auto flex items-center gap-3'>
+        <LikeButton likes={post.likes} postId={post.id} />
         <button className='p-3 rounded-full hover:bg-gray-300'>
-          <Heart width={35} height={35} />
-        </button>
-        <button className='p-3 rounded-full hover:bg-gray-300'>
-          <MessageCircle width={35} height={35} />
+          <MessageCircle width={25} height={25} />
         </button>
       </div>
     </div>

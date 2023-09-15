@@ -20,6 +20,21 @@
   }
 }
 
+.content h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 25px;
+  margin: 6px 0;
+}
+
+.content p {
+  font-size: 18px;
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
 .ql-editor {
   font-size: 20px;
   overflow: hidden;
@@ -29,6 +44,7 @@
   background: #222;
   color: #eee;
   padding: 10px;
+  border-radius: 6px;
 }
 
 .ql-editor a {
