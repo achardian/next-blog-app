@@ -8,6 +8,8 @@ import PostCard from "./PostCard";
 import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
 import Loader from "./Loader";
+import Comment from "./Comment";
+import CommentForm from "./CommentForm";
 
 export {
   Navbar,
@@ -20,4 +22,6 @@ export {
   SaveButton,
   LikeButton,
   Loader,
+  Comment,
+  CommentForm,
 };

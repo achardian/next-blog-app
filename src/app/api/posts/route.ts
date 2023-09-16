@@ -2,16 +2,8 @@ import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 
 export const POST = async (req: Request) => {
-  const {
-    title,
-    imgUrl,
-    content,
-    description,
-    tags,
-    userId,
-    readCounter,
-    slug,
-  } = await req.json();
+  const { title, imgUrl, content, description, tags, userId, slug } =
+    await req.json();
 
   try {
     const post = await prismadb.post.create({
@@ -22,7 +14,6 @@ export const POST = async (req: Request) => {
         description,
         tags,
         userId,
-        readCounter,
         slug,
       },
     });

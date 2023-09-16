@@ -1,6 +1,6 @@
-import { LikeButton, SaveButton } from "@/components";
+import { Comment, LikeButton, SaveButton } from "@/components";
 import { PostWithComment } from "@/types";
-import { BookOpen, Calendar, Heart, MessageCircle } from "lucide-react";
+import { BookOpen, Calendar, MessageCircle } from "lucide-react";
 import moment from "moment";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -74,7 +74,9 @@ const PostDetail = async ({ params }: { params: { slug: string } }) => {
         <button className='p-3 rounded-full hover:bg-gray-300'>
           <MessageCircle width={25} height={25} />
         </button>
+        <SaveButton postId={post.id} saveIds={post.saveIds} />
       </div>
+      <Comment comments={post.comments} postId={post.id} />
     </div>
   );
 };

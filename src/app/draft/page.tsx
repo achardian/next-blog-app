@@ -54,7 +54,6 @@ const Draft = () => {
           description,
           tags,
           userId: session?.user.id,
-          readCounter: 0,
           slug,
         }),
       });

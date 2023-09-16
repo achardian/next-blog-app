@@ -18,7 +18,7 @@ const SaveButton = ({
 
   const handleClick = async () => {
     try {
-      const res = await fetch("/api/posts/save", {
+      const res = await fetch("/api/posts/bookmarks", {
         method: isSaved ? "DELETE" : "PUT",
         body: JSON.stringify({ userId: session?.user.id, postId }),
       });

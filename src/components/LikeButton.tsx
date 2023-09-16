@@ -12,7 +12,7 @@ const LikeButton = ({ likes, postId }: { likes: string[]; postId: string }) => {
 
   const handleClick = async () => {
     try {
-      const res = await fetch("/api/posts/likes", {
+      const res = await fetch("/api/posts/favorites", {
         method: isLiked ? "DELETE" : "PUT",
         body: JSON.stringify({
           userId: session?.user.id,
