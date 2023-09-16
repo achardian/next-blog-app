@@ -4,9 +4,12 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { SaveButton } from ".";
+import getSession from "@/lib/server-session";
 
-const PostCard = ({ post }: { post: PostWithAuthor }) => {
+const PostCard = async ({ post }: { post: PostWithAuthor }) => {
+  const session = await getSession();
   const tags = post.tags.length > 2 ? post.tags.slice(0, 2) : post.tags;
+  const isLiked = post.likes.includes(session?.user.id as string);
 
   return (
     <div className='w-full border border-gray-200 dark:border-gray-600 mb-3 rounded-lg p-5 flex flex-col gap-3'>
@@ -49,7 +52,12 @@ const PostCard = ({ post }: { post: PostWithAuthor }) => {
       <div className='flex items-center justify-between gap-3'>
         <div className='flex items-center gap-5'>
           <Link href={`/post/${post.slug}`} className='flex items-center gap-2'>
-            <Heart width={20} height={20} />
+            <Heart
+              width={20}
+              height={20}
+              fill={isLiked ? "#C51605" : "none"}
+              className={isLiked ? "text-red-600" : "text-gray-500"}
+            />
             {post.likes.length > 0 && post.likes.length}
           </Link>
           <Link href={`/post/${post.slug}`}>
@@ -66,7 +74,7 @@ const PostCard = ({ post }: { post: PostWithAuthor }) => {
               <small>{tag}</small>
             </Link>
           ))}
-          <SaveButton />
+          <SaveButton postId={post.id} saveIds={post.saveIds} />
         </div>
       </div>
     </div>

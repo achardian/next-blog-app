@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
+import toast from "react-hot-toast";
 
 const LikeButton = ({ likes, postId }: { likes: string[]; postId: string }) => {
   const { data: session } = useSession();
@@ -10,15 +11,19 @@ const LikeButton = ({ likes, postId }: { likes: string[]; postId: string }) => {
   const router = useRouter();
 
   const handleClick = async () => {
-    const res = await fetch("/api/posts/likes", {
-      method: isLiked ? "DELETE" : "PUT",
-      body: JSON.stringify({
-        userId: session?.user.id,
-        postId,
-      }),
-      cache: "no-cache",
-    });
-    router.refresh();
+    try {
+      const res = await fetch("/api/posts/likes", {
+        method: isLiked ? "DELETE" : "PUT",
+        body: JSON.stringify({
+          userId: session?.user.id,
+          postId,
+        }),
+        cache: "no-cache",
+      });
+      router.refresh();
+    } catch (error) {
+      toast.error("Failed to like this post!", { duration: 3000 });
+    }
   };
 
   return (
